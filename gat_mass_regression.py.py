@@ -216,7 +216,7 @@ best_mae = float('inf')
 history = {'val_loss': [], 'val_mae': [], 'val_r2': []}
 
 print("\n" + "=" * 50)
-print("ОБУЧЕНИЕ (v14: tPSA, без рёбер, без LogP)")
+print("ОБУЧЕНИЕ (tPSA, без рёбер, без LogP)")
 print("=" * 50)
 
 for ep in range(1, EPOCHS+1):
@@ -263,7 +263,7 @@ for ax, (key, label, color) in zip(axes,
     if len(history[key]) >= 7:
         ax.plot(range(6, len(history[key])), smooth(history[key]), lw=2, color=color)
     ax.set_xlabel('Эпоха'); ax.set_ylabel(label); ax.set_title(label); ax.grid(alpha=.3)
-plt.tight_layout(); plt.savefig('v14_curves.png', dpi=300); plt.show()
+plt.tight_layout(); plt.savefig('curves.png', dpi=300); plt.show()
 
 plt.figure(figsize=(8, 8))
 plt.scatter(tt, tp, alpha=0.4, edgecolors='k', linewidth=0.3, s=20)
@@ -274,7 +274,7 @@ plt.xlabel('Истинная масса (Да)'); plt.ylabel('Предсказа
 plt.title(f'v14: R² = {tr2:.4f}, MAE = {tmae:.0f} Да')
 plt.legend(); plt.grid(alpha=.3); plt.axis('square')
 plt.xlim(0, mx); plt.ylim(0, mx)
-plt.tight_layout(); plt.savefig('v14_scatter.png', dpi=300); plt.show()
+plt.tight_layout(); plt.savefig('scatter.png', dpi=300); plt.show()
 
 plt.figure(figsize=(10, 6))
 plt.hist(errors, bins=50, edgecolor='k', alpha=0.7, color='steelblue', density=True)
@@ -287,7 +287,7 @@ plt.axvline(ci[1], color='green', ls=':', lw=1.5, label=f'95% ДИ = [{ci[0]:.0f
 plt.xlabel('Ошибка (Да)'); plt.ylabel('Плотность')
 plt.title(f'Распределение ошибок (n = {len(errors)})')
 plt.legend(); plt.grid(alpha=.3, axis='y')
-plt.tight_layout(); plt.savefig('v14_hist.png', dpi=300); plt.show()
+plt.tight_layout(); plt.savefig('hist.png', dpi=300); plt.show()
 
 mass_bins_plot, labels = [0, 200, 400, 600, 800, 2000], ['<200','200–400','400–600','600–800','>800']
 binned = [errors[(tt >= mass_bins_plot[i]) & (tt < mass_bins_plot[i+1])] for i in range(len(mass_bins_plot)-1)]
@@ -297,6 +297,4 @@ for p in bp['boxes']: p.set_facecolor('steelblue'); p.set_alpha(0.6)
 ax.axhline(0, color='r', ls='--', lw=2)
 ax.set_xlabel('Диапазон истинной массы (Да)'); ax.set_ylabel('Ошибка (Да)')
 ax.set_title('Ошибки по диапазонам массы (v14)'); ax.grid(alpha=.3, axis='y')
-plt.tight_layout(); plt.savefig('v14_boxplot.png', dpi=300); plt.show()
-
-print("\nГОТОВО! (v14)")
+plt.tight_layout(); plt.savefig('boxplot.png', dpi=300); plt.show()
